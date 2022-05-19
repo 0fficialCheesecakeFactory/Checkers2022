@@ -3,25 +3,28 @@ public class Driver {
 
 	public static void main(String[] args) 
 	{
-	    Scanner scan = new Scanner(System.in);
-	    String lcv;
+		Scanner scan = new Scanner(System.in);
+		String lcv;
 		System.out.println("Would you like to play checkers?");
 		lcv = scan.next();
-        while(lcv.equals("Y"))
-        {
-            printRules();
-            Checkers game = new Checkers();
-            game.run();
-            System.out.println("Would you like to play again?");
-            lcv = scan.next();
-        }
+		while(lcv.equals("Y"))
+		{
+			printRules();
+			Checkers game = new Checkers();
+			game.run();
+			System.out.println("Would you like to play again?");
+			lcv = scan.next();
+		}
 	}
-	public void printRules() 
+	public static void printRules() 
 	{
-	    System.out.println("Checkers is a game involving two people.");
-	    System.out.println("Each player will take their turn and each turn is as follows:");
-	    System.out.println("at the start of each turn you will recieve a list of all your potential moves");
-	    System.out.println("you will then ")
+		System.out.println("Checkers is a game involving two people.");
+		System.out.println("Each player will take their turn and each turn is as follows:");
+		System.out.println("at the start of each turn you will recieve a list of all your potential moves");
+		System.out.println("you will then jump if you can jump");
+		System.out.println("Or you will move a piece forward in a diagnal by 1 square");
+		System.out.println("Do not move off board");
+		System.out.println("if piece Kinged then it can move backword in a diagnal");
 	}
 
 }
