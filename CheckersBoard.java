@@ -46,7 +46,7 @@ public class CheckersBoard
 				}
 			}
 		}
-		flip(checkersBoard);
+		flip();
 	}
 
 	//copy each character of the file into a char[][], then use the position of each char in that array to place them in the board.
@@ -56,15 +56,16 @@ public class CheckersBoard
 		try
 		{
 			Scanner scan = new Scanner(f);
-			for(int i = 0; i < f.length(); i++)
+			for(int i = 0; i < 8; i++)
 			{
-				String temp = scan.next();
-				for(int c = 0; c < spots.length; c++)
+				String temp = scan.nextLine();
+				for(int c = 0; c < 8; c++)
 				{
 					spots[i][c] = temp.charAt(c); //translates the file into a 2d array
 				}
 			}
-
+		
+			checkersBoard = new CheckersPiece[8][8];
 			for (int r = 0; r < spots.length; r++)
 			{
 				for (int col = 0; col < spots[r].length; col++) //translates the characters in the array to actual pieces
@@ -79,29 +80,29 @@ public class CheckersBoard
 					}
 					else //null pieces (spaces)
 					{
-						checkersBoard[r][col] = null;
+						checkersBoard[r][col] = new CheckersPiece(0, r, col, this);
 					}
 				}
 			}
 		}
-		catch(Exception IOException)
+		catch(IOException e)
 		{
 			System.out.println("invalid file");
+			e.printStackTrace();
 		}
 	}
 
-	private CheckersPiece[][] flip(CheckersPiece[][] flipBoard)
+	private void flip()//(CheckersPiece[][] flipBoard)
 	{
-		for(int r = 0; r < flipBoard.length; r++)
+		for(int r = 0; r < (checkersBoard.length)/2; r++)
 		{
-			for(int c = 0; c < flipBoard[0].length; c++)
+			for(int c = 0; c < checkersBoard[0].length; c++)
 			{
-				CheckersPiece temp = flipBoard[8-r][c];
-				flipBoard[8-r][c] = flipBoard[r][c];
-				flipBoard[r][c] = temp;
+				CheckersPiece temp = checkersBoard[7-r][c];
+				checkersBoard[7-r][c] = checkersBoard[r][c];
+				checkersBoard[r][c] = temp;
 			}
 		}
-		return flipBoard;
 	}
 
 	public CheckersPiece getPiece(int row, int col)
@@ -116,7 +117,7 @@ public class CheckersBoard
 		return king;
 	}
 
-	public int[] getPiecePosition(CheckersPiece piece)
+	public int[] getPiecePosition(CheckersPiece piece) 
 	{
 		int[] pos = new int[2];
 		pos[0] = piece.getRow();
@@ -131,17 +132,43 @@ public class CheckersBoard
 		{
 			for (int c = 0; c < checkersBoard[r].length; c++)
 			{
-				out += checkersBoard[r][c];
+				if (checkersBoard[r][c] != null)
+					out += checkersBoard[r][c];
+				else
+					out += " ";
 			}
 			out += "\n";
 		}
-
 		return out;
 	}
 
 	public void printBoard()
 	{
 		//figure out an algorithm to prin a visual representation of the board
+		System.out.println("  +---+---+---+---+---+---+---+---+ ");
+		
+		for (int r = 0; r < checkersBoard.length; r++)
+		{
+			System.out.print(8-r);
+			for(int c = 0; c < checkersBoard[r].length; c++)
+			{
+				if (checkersBoard[r][c]!=null)
+					System.out.print(" | " + checkersBoard[r][c]);
+				else
+					System.out.print(" |  ");
+			}
+			if (r!=7)
+				System.out.println(" |\n* |---+---+---+---+---+---+---+---|");
+			else
+				System.out.println(" |\n  +---+---+---+---+---+---+---+---+");
+		}
+		System.out.println("    A * B * C * D * E * F * G * H");
+	}
+
+	public void add(CheckersPiece temp, int row, int column) 
+	{
+		checkersBoard[row][column] = temp;
+		
 	}
 
 }
