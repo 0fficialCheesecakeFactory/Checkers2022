@@ -16,17 +16,18 @@ public class CheckersBoard
 			{
 				for (int c = 0; c < checkersBoard[0].length; c+=2)
 				{
-					checkersBoard[r][c] = new CheckersPiece(1, r, c, this);
+					checkersBoard[r][c] = new CheckersPiece(2, r, c, this);
 				}
 			}
 			else
 			{
 				for (int c = 1; c < checkersBoard[0].length; c+=2)
 				{
-					checkersBoard[r][c] = new CheckersPiece(1, r, c, this);
+					checkersBoard[r][c] = new CheckersPiece(2, r, c, this);
 				}
 			}
 		}
+		
 
 		//red pieces
 		for (int r = 5; r < checkersBoard.length; r++)
@@ -35,18 +36,30 @@ public class CheckersBoard
 			{
 				for (int c = 0; c < checkersBoard[0].length; c+=2)
 				{
-					checkersBoard[r][c] = new CheckersPiece(2, r, c, this);
+					checkersBoard[r][c] = new CheckersPiece(1, r, c, this);
 				}
 			}
 			else
 			{
 				for (int c = 1; c < checkersBoard[0].length; c+=2)
 				{
-					checkersBoard[r][c] = new CheckersPiece(2, r, c, this);
+					checkersBoard[r][c] = new CheckersPiece(1, r, c, this);
 				}
 			}
 		}
-		flip();
+		
+		//empty spaces
+		for (int r = 0; r < checkersBoard.length; r++)
+		{
+			for (int c = 0; c < checkersBoard[0].length; c++)
+			{
+				if ((checkersBoard[r][c]==(null)))
+				{
+					checkersBoard[r][c] = new CheckersPiece(0, r, c, this);
+				}
+			}
+		}
+	//	flip();
 	}
 
 	//copy each character of the file into a char[][], then use the position of each char in that array to place them in the board.
@@ -78,7 +91,15 @@ public class CheckersBoard
 					{
 						checkersBoard[r][col] = new CheckersPiece(1, r, col, this);
 					}
-					else //null pieces (spaces)
+					else if (spots[r][col] == 'R')
+					{
+						checkersBoard[r][col] = new KingCheckersPiece(2, r, col, this);
+					}
+					else if (spots[r][col] == 'B')
+					{
+						checkersBoard[r][col] = new KingCheckersPiece(1, r, col, this);
+					}
+					else //empty pieces (priority 0 b/c they do not exist)
 					{
 						checkersBoard[r][col] = new CheckersPiece(0, r, col, this);
 					}
@@ -92,18 +113,18 @@ public class CheckersBoard
 		}
 	}
 
-	private void flip()//(CheckersPiece[][] flipBoard)
-	{
-		for(int r = 0; r < (checkersBoard.length)/2; r++)
-		{
-			for(int c = 0; c < checkersBoard[0].length; c++)
-			{
-				CheckersPiece temp = checkersBoard[7-r][c];
-				checkersBoard[7-r][c] = checkersBoard[r][c];
-				checkersBoard[r][c] = temp;
-			}
-		}
-	}
+//	private void flip()//(CheckersPiece[][] flipBoard) //TODO FIX FLIP SO THAT THE ACTUAL LOCATION OF THE PIECES CHANGE
+//	{
+//		for(int r = 0; r < (checkersBoard.length)/2; r++)
+//		{
+//			for(int c = 0; c < checkersBoard[0].length; c++)
+//			{
+//				CheckersPiece temp = checkersBoard[7-r][c];
+//				checkersBoard[7-r][c] = checkersBoard[r][c];
+//				checkersBoard[r][c] = temp;
+//			}
+//		}
+//	}
 
 	public CheckersPiece getPiece(int row, int col)
 	{
@@ -145,7 +166,7 @@ public class CheckersBoard
 	public void printBoard()
 	{
 		//figure out an algorithm to prin a visual representation of the board
-		System.out.println("  +---+---+---+---+---+---+---+---+ ");
+		System.out.println("  ---+---+---+---+---+---+---+--- ");
 		
 		for (int r = 0; r < checkersBoard.length; r++)
 		{
@@ -159,8 +180,8 @@ public class CheckersBoard
 			}
 			if (r!=7)
 				System.out.println(" |\n* |---+---+---+---+---+---+---+---|");
-			else
-				System.out.println(" |\n  +---+---+---+---+---+---+---+---+");
+			else	
+				System.out.println(" |\n  ---+---+---+---+---+---+---+---");
 		}
 		System.out.println("    A * B * C * D * E * F * G * H");
 	}
@@ -170,5 +191,18 @@ public class CheckersBoard
 		checkersBoard[row][column] = temp;
 		
 	}
+	
+	public void add(KingCheckersPiece temp, int row, int column) 
+	{
+		checkersBoard[row][column] = temp;
+		
+	}
+	
+	public void delete(int row, int col)
+	{
+		checkersBoard[row][col].priority = 0;
+		
+	}
+
 
 }
