@@ -5,6 +5,7 @@ public class CheckersPiece
 	protected int row;
 	protected int column;
 	protected CheckersBoard myBoard;
+	protected boolean hasJumped = false;
 
 	public CheckersPiece(int priority, int row, int col, CheckersBoard board)
 	{
@@ -62,16 +63,16 @@ public class CheckersPiece
 					}
 				}
 					
-				else if(column == 7)
-				{
-					if(myBoard.getPiece(row+yoffset, column-1).priority == 0)
-					{
-						CheckersPiece temp = new CheckersPiece(priority*-1,row+yoffset, column-1, null);
-						ret += " " + temp.colToString() +(temp.rowToString()); //-1
-						moves.add(ret);
-						ret = colToString() + rowToString(); //resets ret
-					}
-				}
+//				else if(column == 7)
+//				{
+//					if(myBoard.getPiece(row+yoffset, column-1).priority == 0)
+//					{
+//						CheckersPiece temp = new CheckersPiece(priority*-1,row+yoffset, column-1, null);
+//						ret += " " + temp.colToString() +(temp.rowToString()); //-1
+//						moves.add(ret);
+//						ret = colToString() + rowToString(); //resets ret
+//					}
+//				}
 
 				
 			}catch(NullPointerException e)
@@ -109,16 +110,16 @@ public class CheckersPiece
 				}
 			}
 				
-			else if(column == 7)
-			{
-				if(myBoard.getPiece(row+yoffset, column-1).priority == 0)
-				{
-					CheckersPiece temp = new CheckersPiece(priority*-1,row+yoffset, column-1, null);
-					ret += " " + temp.colToString() +(temp.rowToString()); //-1
-					moves.add(ret);
-					ret = colToString() + rowToString(); //resets ret
-				}
-			}
+//			else if(column == 7)
+//			{
+//				if(myBoard.getPiece(row+yoffset, column-1).priority == 0)
+//				{
+//					CheckersPiece temp = new CheckersPiece(priority*-1,row+yoffset, column-1, null);
+//					ret += " " + temp.colToString() +(temp.rowToString()); //-1
+//					moves.add(ret);
+//					ret = colToString() + rowToString(); //resets ret
+//				}
+//			}
 		}catch(NullPointerException e)
 		{
 			
@@ -134,13 +135,18 @@ public class CheckersPiece
 			return false;
 		else
 		{
-			swap(myBoard.getPiece(row,col), this.row, column);
+			
 			if(canJump())
 			{
 				int midR = (row+this.row) /2;
 				int midC = (col + this.column) /2;
+				myBoard.delete(midR, midC);
 				myBoard.add(new CheckersPiece(0,midR,midC,null), midR, midC);
+				//hasJumped = true;
+				swap(myBoard.getPiece(row,col), this.row, column);
+				myBoard.getPiece(row, col).hasJumped = true;
 			}
+			else swap(myBoard.getPiece(row,col), this.row, column);
 			return true;
 		}
 	}
@@ -153,7 +159,8 @@ public class CheckersPiece
 		int tempcol = piece.column;
 		int oldrow = row;
 		int oldcol = col;
-		CheckersPiece temp = new CheckersPiece(priority, temprow, tempcol, null);
+		CheckersPiece temp = new CheckersPiece(priority, temprow, tempcol, myBoard);
+//		temp.hasJumped = true;
 		//if(myBoard.getPiece(row, col).priority == 0)
 		if(piece.priority == 0)
 		{
@@ -163,7 +170,7 @@ public class CheckersPiece
 			row = temprow;
 			col = tempcol;
 			myBoard.add(temp, row, col);
-			myBoard.add(new CheckersPiece(0, oldrow, oldcol, null), oldrow, oldcol);
+			myBoard.add(new CheckersPiece(0, oldrow, oldcol, myBoard), oldrow, oldcol);
 		}
 	}
 
