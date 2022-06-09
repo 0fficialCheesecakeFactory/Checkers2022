@@ -60,40 +60,63 @@ public class KingCheckersPiece extends CheckersPiece
 				}
 			}catch(IndexOutOfBoundsException e) //edge cases where it cannot scan in all 4 directions
 			{
-				if(column == 0)
+				if(row == 0 && column == 7)
 				{
-					if(myBoard.getPiece(row+1, column+1).priority == 0)
+					if(myBoard.getPiece(row+1, column-1).priority != priority && myBoard.getPiece(row+2, column-2).priority == 0)
 					{
-						CheckersPiece temp = new CheckersPiece(priority*-1,row+1, column+1, null); //TODO: Why *-1? options are 0, 1, 2
-						ret += " " + temp.colToString() +(temp.rowToString()); //-1
-						moves.add(ret);
-						ret = colToString() + rowToString(); //resets ret
-					}
-					if(myBoard.getPiece(row-1, column+1).priority == 0)
-					{
-						CheckersPiece temp = new CheckersPiece(priority*-1,row-1, column+1, null);
+						CheckersPiece temp = new CheckersPiece(priority*-1,row+2, column-2, null);
 						ret += " " + temp.colToString() +(temp.rowToString()); //-1
 						moves.add(ret);
 						ret = colToString() + rowToString(); //resets ret
 					}
 				}
-					
-				else if(column == 7)
+				
+				
+				else if(row == 7 && column == 0)
 				{
-					if(myBoard.getPiece(row+1, column-1).priority == 0)
+					if(myBoard.getPiece(row-1, column+1).priority != priority && myBoard.getPiece(row-2, column+2).priority == 0)
 					{
-						CheckersPiece temp = new CheckersPiece(priority*-1,row+1, column-1, null);
+						CheckersPiece temp = new CheckersPiece(priority*-1,row-2, column+2, null);
 						ret += " " + temp.colToString() +(temp.rowToString()); //-1
 						moves.add(ret);
 						ret = colToString() + rowToString(); //resets ret
 					}
-					if(myBoard.getPiece(row-1, column-1).priority == 0)
+				}
+				else if(row == 7)
+				{
+					if(myBoard.getPiece(row-1, column-1).priority != priority && myBoard.getPiece(row-2, column-2).priority == 0)
 					{
-						CheckersPiece temp = new CheckersPiece(priority*-1,row-1, column-1, null);
+						CheckersPiece temp = new CheckersPiece(priority*-1,row-2, column-2, null);
+						ret += " " + temp.colToString() +(temp.rowToString()); //-1
+						System.out.println(ret); //not working the moves are weird
+						moves.add(ret);
+						ret = colToString() + rowToString(); //resets ret
+					}
+					if(myBoard.getPiece(row-1, column+1).priority != priority && myBoard.getPiece(row-2, column+2).priority == 0)
+					{
+						CheckersPiece temp = new CheckersPiece(priority*-1,row-2, column+2, null);
 						ret += " " + temp.colToString() +(temp.rowToString()); //-1
 						moves.add(ret);
 						ret = colToString() + rowToString(); //resets ret
 					}
+				}
+				else if(column == 0)
+				{
+					if(myBoard.getPiece(row+1, column+1).priority != priority && myBoard.getPiece(row+2, column+2).priority == 0)
+					{
+						CheckersPiece temp = new CheckersPiece(priority*-1,row+2, column+2, null);
+						ret += " " + temp.colToString() +(temp.rowToString()); //-1
+						moves.add(ret);
+						ret = colToString() + rowToString(); //resets ret
+					}
+					if(myBoard.getPiece(row-1, column+1).priority == 0 && myBoard.getPiece(row-2, column+2).priority == 0)
+					{
+						CheckersPiece temp = new CheckersPiece(priority*-1,row-2, column+2, null);
+						ret += " " + temp.colToString() +(temp.rowToString()); //-1
+						moves.add(ret);
+						ret = colToString() + rowToString(); //resets ret
+					}
+					
 				}
 			}
 		}
@@ -130,7 +153,63 @@ public class KingCheckersPiece extends CheckersPiece
 			}
 		}catch(IndexOutOfBoundsException e) //edge cases where it cannot scan in all 4 directions
 		{
-			if(column == 0)
+			if(row == 0 && column == 7)
+			{
+				if(myBoard.getPiece(row+1, column-1).priority == 0)
+				{
+					CheckersPiece temp = new CheckersPiece(priority*-1,row+1, column-1, null);
+					ret += " " + temp.colToString() +(temp.rowToString()); //-1
+					moves.add(ret);
+					ret = colToString() + rowToString(); //resets ret
+				}
+			}
+			else if(row == 0)
+			{
+				if(myBoard.getPiece(row+1, column-1).priority == 0)
+				{
+					CheckersPiece temp = new CheckersPiece(priority*-1,row+1, column-1, null);
+					ret += " " + temp.colToString() +(temp.rowToString()); //-1
+					moves.add(ret);
+					ret = colToString() + rowToString(); //resets ret
+				}
+				if(myBoard.getPiece(row+1, column+1).priority == 0)
+				{
+					CheckersPiece temp = new CheckersPiece(priority*-1,row+1, column+1, null);
+					ret += " " + temp.colToString() +(temp.rowToString()); //-1
+					moves.add(ret);
+					ret = colToString() + rowToString(); //resets ret
+				}
+			}
+			
+			
+			else if(row == 7 && column == 0)
+			{
+				if(myBoard.getPiece(row-1, column+1).priority == 0)
+				{
+					CheckersPiece temp = new CheckersPiece(priority*-1,row-1, column+1, null);
+					ret += " " + temp.colToString() +(temp.rowToString()); //-1
+					moves.add(ret);
+					ret = colToString() + rowToString(); //resets ret
+				}
+			}
+			else if(row == 7)
+			{
+				if(myBoard.getPiece(row-1, column-1).priority == 0)
+				{
+					CheckersPiece temp = new CheckersPiece(priority*-1,row-1, column-1, null);
+					ret += " " + temp.colToString() +(temp.rowToString()); //-1
+					moves.add(ret);
+					ret = colToString() + rowToString(); //resets ret
+				}
+				if(myBoard.getPiece(row-1, column+1).priority == 0)
+				{
+					CheckersPiece temp = new CheckersPiece(priority*-1,row-1, column+1, null);
+					ret += " " + temp.colToString() +(temp.rowToString()); //-1
+					moves.add(ret);
+					ret = colToString() + rowToString(); //resets ret
+				}
+			}
+			else if(column == 0)
 			{
 				if(myBoard.getPiece(row+1, column+1).priority == 0)
 				{
@@ -146,24 +225,7 @@ public class KingCheckersPiece extends CheckersPiece
 					moves.add(ret);
 					ret = colToString() + rowToString(); //resets ret
 				}
-			}
 				
-			else if(column == 7)
-			{
-				if(myBoard.getPiece(row+1, column-1).priority == 0)
-				{
-					CheckersPiece temp = new CheckersPiece(priority*-1,row+1, column-1, null);
-					ret += " " + temp.colToString() +(temp.rowToString()); //-1
-					moves.add(ret);
-					ret = colToString() + rowToString(); //resets ret
-				}
-				if(myBoard.getPiece(row-1, column-1).priority == 0)
-				{
-					CheckersPiece temp = new CheckersPiece(priority*-1,row-1, column-1, null);
-					ret += " " + temp.colToString() +(temp.rowToString()); //-1
-					moves.add(ret);
-					ret = colToString() + rowToString(); //resets ret
-				}
 			}
 		}
 		return moves;
@@ -186,7 +248,7 @@ public class KingCheckersPiece extends CheckersPiece
 			}
 			if(!(myBoard.getPiece(row+yoffset, column-1).priority == 0))
 			{
-				if((myBoard.getPiece(row+yoffset, column-1).getPriority() != priority) && (myBoard.getPiece(row-doubleoffset, column-2).priority == 0))
+				if((myBoard.getPiece(row+yoffset, column-1).getPriority() != priority) && (myBoard.getPiece(row+doubleoffset, column-2).priority == 0))
 				{
 					return true;
 				}
@@ -208,7 +270,32 @@ public class KingCheckersPiece extends CheckersPiece
 			
 		}catch(IndexOutOfBoundsException e)
 		{
-
+			if(row == 0 && column == 7)
+			{
+				if(myBoard.getPiece(row+1, column-1).priority != priority) return true;
+			}
+			else if(row == 0)
+			{
+				if(myBoard.getPiece(row+1, column-1).priority != priority) return true;
+				if(myBoard.getPiece(row+1, column+1).priority != priority) return true;		
+			}
+			
+			
+			else if(row == 7 && column == 0)
+			{
+				if(myBoard.getPiece(row-1, column+1).priority != priority) return true;
+			}
+			else if(row == 7)
+			{
+				if(myBoard.getPiece(row-1, column-1).priority != priority) return true;
+				if(myBoard.getPiece(row-1, column+1).priority != priority) return true;
+			}
+			else if(column == 0)
+			{
+				if(myBoard.getPiece(row+1, column+1).priority != priority) return true;
+				if(myBoard.getPiece(row-1, column+1).priority != priority) return true;
+				
+			}
 		}
 		catch(NullPointerException e)
 		{
@@ -217,35 +304,15 @@ public class KingCheckersPiece extends CheckersPiece
 		return false;
 	}
 	
-	public boolean move(int row, int col)
-	{
-		ArrayList<String> legal = legalMoves();
-		System.out.println(legal);
-		String move = colToString() + rowToString() + " " + myBoard.getPiece(row, col).colToString() + myBoard.getPiece(row, col).rowToString();
-		if(!legal.contains(move))
-			return false;
-		else
-		{
-			swap(myBoard.getPiece(row,col), this.row, column);
-			if(canJump())
-			{
-				int midR = (row+this.row) /2;
-				int midC = (col + this.column) /2;
-				myBoard.add(new KingCheckersPiece(0,midR,midC,null), midR, midC);
-			}
-			return true;
-		}
-	}
-	
 	//public void jump(int row, int col,)
 
-	public void swap(KingCheckersPiece piece, int row, int col) //first piece is being swapped/jumped with second piece
+	public void swap(CheckersPiece piece, int row, int col) //first piece is being swapped/jumped with second piece
 	{
 		int temprow = piece.row;
 		int tempcol = piece.column;
 		int oldrow = row;
 		int oldcol = col;
-		KingCheckersPiece temp = new KingCheckersPiece(priority, temprow, tempcol, null);
+		KingCheckersPiece temp = new KingCheckersPiece(priority, temprow, tempcol, myBoard);
 		//if(myBoard.getPiece(row, col).priority == 0)
 		if(piece.priority == 0)
 		{
@@ -255,8 +322,7 @@ public class KingCheckersPiece extends CheckersPiece
 			row = temprow;
 			col = tempcol;
 			myBoard.add(temp, row, col);
-			myBoard.add(new KingCheckersPiece(0, oldrow, oldcol, null), oldrow, oldcol);
-			//myBoard.kingPiece(row, col);
+			myBoard.add(new CheckersPiece(0, oldrow, oldcol, myBoard), oldrow, oldcol);
 		}
 	}
 
