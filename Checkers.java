@@ -1,4 +1,6 @@
+import java.io.Console;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -38,11 +40,8 @@ public class Checkers
 			second = "black";
 		}
 	}
-	//to be implemented later
+
 	public void run()
-						//TODO FIX KING YOU LAZY S#@!S
-						//TODO King does't jump correctly with edge cases specifically
-						//TODO get a life
 	{
 		Scanner input = new Scanner(System.in);
 		int col1, col2 = 0;
@@ -52,79 +51,134 @@ public class Checkers
 		board.printBoard();
 		do //main game loop where turns are played until the game is over
 		{
+			boolean moved = false;
 			do 
 			{
-				System.out.println("It is " + first +"'s turn");
-				System.out.print("your moves:");
-				moveList = doTurn(firstToAct, moveList);
-				System.out.println("What is your move? Enter \"[firstspot] [secondspot]\"");
-				move = input.nextLine();
-				//System.out.println(moveList.toString());
-				if(moveList.contains(move)) //checks if input is valid
-				{
-					col1 = move.charAt(0); //UNCHECKD assigns the characters to move
-					row1 = move.charAt(1)-48; //Align digit w/ unicode value
-					col2 = move.charAt(3);
-					row2 = move.charAt(4)-48;  //Align digit w/ unicode value
+				do 
+				{	
+					moved = false;
+					System.out.println("It is " + first +"'s turn");
+					System.out.print("your moves:");
+					moveList = doTurn(firstToAct, moveList);
+					System.out.println("What is your move? Enter \"[firstspot] [secondspot]\"");
+					if(!moveList.isEmpty()) move = input.nextLine();
+					else move = "";
+					move = move.toUpperCase();
+					//System.out.println(moveList.toString());
 
-					row1 = 8-row1;
-					row2 = 8-row2;
+					if(moveList.contains(move) && !moveList.isEmpty()) //checks if input is valid
+					{
+						col1 = move.charAt(0); //UNCHECKD assigns the characters to move
+						row1 = move.charAt(1)-48; //Align digit w/ unicode value
+						col2 = move.charAt(3);
+						row2 = move.charAt(4)-48;  //Align digit w/ unicode value
 
-					col1 = (char) (col1-65); //Align digit w/ unicode value
-					col2 = (char) (col2-65); //Align digit w/ unicode value
-					board.getPiece(row1, col1).move(row2, col2);
-					
-					if(row2 == 0 && board.getPiece(row2, col2).priority == 1)
-						board.kingPiece(row2, col2);
-					else if(row2 == 7 && board.getPiece(row2, col2).priority == 2)
-						board.kingPiece(row2, col2);
+						row1 = 8-row1;
+						row2 = 8-row2;
 
-					board.printBoard();
-				}
-				
-			}while(board.getPiece(row2, col2).canJump() && board.getPiece(row2,col2).hasJumped); //loop that sees how many times it can jump
-			
+						col1 = (char) (col1-65); //Align digit w/ unicode value
+						col2 = (char) (col2-65); //Align digit w/ unicode value
+						board.getPiece(row1, col1).move(row2, col2);
+
+						if(row2 == 0 && board.getPiece(row2, col2).priority == 1)
+							board.kingPiece(row2, col2);
+						else if(row2 == 7 && board.getPiece(row2, col2).priority == 2)
+							board.kingPiece(row2, col2);
+
+						moved = true;
+
+						if(row2 == 0 && board.getPiece(row2, col2).priority == 1)
+							board.kingPiece(row2, col2);
+						else if(row2 == 7 && board.getPiece(row2, col2).priority == 2)
+							board.kingPiece(row2, col2);
+
+						if(scanForNoPieces() == 1) //checks for winners
+							blackWon = true;
+						else if(scanForNoPieces() == 2)
+							redWon = true;
+
+						board.printBoard(); //end of player 2's turn
+					}
+					else if (moveList.isEmpty()) moved = true;
+					else moved = false;
+				}while(!moved);
+
+			}while(board.getPiece(row2, col2).canJump() && board.getPiece(row2,col2).hasJumped && !moved); //loop that sees how many times it can jump
 			do
 			{
-				System.out.println("It is " + second +"'s turn");
-				System.out.print("your moves:");
-				moveList = doTurn(secondToAct,moveList);
-				System.out.println("What is your move? Enter \"[firstspot] [secondspot]\"");
-				move = input.nextLine();
-				if(moveList.contains(move)) //checks if input is valid
+				do
 				{
-					col1 = move.charAt(0); //UNCHECKD assigns the characters to move
-					row1 = move.charAt(1)-48; //Align digit w/ unicode value
-					col2 = move.charAt(3);
-					row2 = move.charAt(4)-48;  //Align digit w/ unicode value
+					moved = false;
+					System.out.println("It is " + second +"'s turn");
+					System.out.print("your moves:");
+					moveList = doTurn(secondToAct,moveList);
+					System.out.println("What is your move? Enter \"[firstspot] [secondspot]\"");
+					if(!moveList.isEmpty()) move = input.nextLine();
+					else move = "";
+					move.toUpperCase();
+					if(moveList.contains(move) && !moveList.isEmpty()) //checks if input is valid
+					{
 
-					row1 = 8-row1;
-					row2 = 8-row2;
+						col1 = move.charAt(0); //UNCHECKD assigns the characters to move
+						row1 = move.charAt(1)-48; //Align digit w/ unicode value
+						col2 = move.charAt(3);
+						row2 = move.charAt(4)-48;  //Align digit w/ unicode value
 
-					col1 = (char) (col1-65); //Align digit w/ unicode value
-					col2 = (char) (col2-65); //Align digit w/ unicode value
+						row1 = 8-row1;
+						row2 = 8-row2;
 
-					board.getPiece(row1, col1).move(row2, col2);
-				}
-				
-				if(row2 == 0 && board.getPiece(row2, col2).priority == 1)
-					board.kingPiece(row2, col2);
-				else if(row2 == 7 && board.getPiece(row2, col2).priority == 2)
-					board.kingPiece(row2, col2);
-				
-				board.printBoard(); //end of player 2's turn
+						col1 = (char) (col1-65); //Align digit w/ unicode value
+						col2 = (char) (col2-65); //Align digit w/ unicode value
 
-				if(scanForNoPieces() == 1) //checks for winners
-					blackWon = true;
-				else if(scanForNoPieces() == 2)
-					redWon = true;
+						board.getPiece(row1, col1).move(row2, col2);
+
+						moved = true;
+
+						if(row2 == 0 && board.getPiece(row2, col2).priority == 1)
+							board.kingPiece(row2, col2);
+						else if(row2 == 7 && board.getPiece(row2, col2).priority == 2)
+							board.kingPiece(row2, col2);
+
+						if(scanForNoPieces() == 1) //checks for winners
+							blackWon = true;
+						else if(scanForNoPieces() == 2)
+							redWon = true;
+
+						board.printBoard(); //end of player 2's turn
+
+					}
+					else if (moveList.isEmpty()) moved = true;
+
+				}while(!moved);
 			}while(board.getPiece(row2, col2).canJump() && board.getPiece(row2,col2).hasJumped);
-			
-			
+
+
 
 		}while(!redWon && !blackWon);
-		
+
 		//win condition
+		if (redWon) System.out.println("Congratulations! The red player won!"); 
+		else System.out.println("Congratulations! The black player won!");
+		System.out.println("     _,.");
+		System.out.println("    ,` -.)");
+		System.out.println("   ( _/-\\\\-._");
+		System.out.println("  /,|`--._,-^|            ,");
+		System.out.println("  \\_| |`-._/||          ,\'|");
+		System.out.println("    |  `-, / |         /  /");
+		System.out.println("    |     || |        /  /");
+		System.out.println("     `r-._||/   __   /  /");
+		System.out.println(" __,-<_     )`-/  `./  /");
+		System.out.println("\'  \\   `---\'   \\   /  /");
+		System.out.println("    |           |./  /");
+		System.out.println("    /           //  /");
+		System.out.println("\\_/' \\         |/  /");
+		System.out.println(" |    , ``  (\\/  /_");
+		System.out.println(" |    |   _,^-'/  /");
+		System.out.println("  \\,.->._    \\X-=/^");
+		System.out.println("  (  /   `-._//^`");
+		System.out.println("   `Y-.____(__}");
+		System.out.println("    |     {__)");
+		System.out.println("          ()");
 
 	}
 
@@ -150,9 +204,25 @@ public class Checkers
 			{
 				if(color == 1)
 					redWon = true;
-				else blackWon = true;
+				else 
+					blackWon = true;
 			}
-
+			for(int i = 0; i<jump.size(); i++)
+			{
+				if(jump.get(i).equals("") || jump.get(i).equals(" ")) 
+				{
+					jump.remove(i);
+					i--;
+				}
+			}
+			for(int i = 0; i<noJump.size(); i++)
+			{
+				if(noJump.get(i).equals("") || noJump.get(i).equals(" ")) 
+				{
+					noJump.remove(i);
+					i--;
+				}
+			}
 			if(jump.isEmpty())
 			{
 				System.out.println(noJump);
@@ -196,10 +266,38 @@ public class Checkers
 		{return 0;}
 	}
 
-	public CheckersBoard boardResult(File moves)
+	public CheckersBoard boardResult(File moves) throws FileNotFoundException
 	{
+		int col1, col2 = 0;
+		int row1, row2 = 0;
+		Scanner lineRead = new Scanner(moves);
+		while(!redWon && !blackWon && lineRead.hasNextLine())
+		{
+			ArrayList<String> moveList = new ArrayList<String>(); 
+			moveList = doTurn(1, moveList);
+			moveList.addAll(doTurn(2, moveList));
 
-		CheckersBoard board = new CheckersBoard(moves);
+			String move = lineRead.nextLine();
+			if(moveList.contains(move))
+			{
+				col1 = move.charAt(0); //UNCHECKD assigns the characters to move
+				row1 = move.charAt(1)-48; //Align digit w/ unicode value
+				col2 = move.charAt(3);
+				row2 = move.charAt(4)-48;  //Align digit w/ unicode value
+
+				row1 = 8-row1;
+				row2 = 8-row2;
+
+				col1 = (char) (col1-65); //Align digit w/ unicode value
+				col2 = (char) (col2-65); //Align digit w/ unicode value
+				board.getPiece(row1, col1).move(row2, col2);
+			}
+			if(row2 == 0 && board.getPiece(row2, col2).priority == 1)
+				board.kingPiece(row2, col2);
+			else if(row2 == 7 && board.getPiece(row2, col2).priority == 2)
+				board.kingPiece(row2, col2);
+
+		}
 		return board;
 	}
 }
