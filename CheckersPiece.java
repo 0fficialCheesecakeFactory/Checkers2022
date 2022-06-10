@@ -24,107 +24,45 @@ public class CheckersPiece
 			yoffset = 1;
 		else yoffset = -1;
 		doubleoffset = yoffset*2;
-		if(canJump()) 
+
+
+		moves.add(checkMove(yoffset,1,canJump())); 
+		moves.add(checkMove(yoffset,-1,canJump())); 
+
+		return moves;
+	}
+	public String checkMove(int rowMove, int colMove, boolean couldJump)
+	{
+		if(couldJump)
 		{
 			try 
 			{
-				if(!(myBoard.getPiece(row+yoffset, column+1).priority == 0))
+				if(!(myBoard.getPiece(row+rowMove, column+colMove).priority == 0))
 				{
-					if((myBoard.getPiece(row+yoffset, column+1).getPriority() != priority) && (myBoard.getPiece(row+doubleoffset, column+2).priority == 0))
-					{
-						CheckersPiece temp = new CheckersPiece(priority*-1,row+doubleoffset, column+2, null);
-						ret += " " + temp.colToString() + temp.rowToString();
-						moves.add(ret);
-						ret = colToString() + rowToString();
-					}
+					if(row+rowMove < 8 && column+colMove < 8 && row+rowMove >= 0 && column+colMove >= 0 )
+						if((myBoard.getPiece(row+rowMove, column+colMove).getPriority() != priority) && (myBoard.getPiece(row+(2*rowMove), column+(2*colMove)).priority == 0))
+						{
+							String ret = colToString() + rowToString();
+							CheckersPiece temp = new CheckersPiece(priority*-1,row+(2*rowMove), column+(2*colMove), null);
+							ret += " " + temp.colToString() + temp.rowToString();
+							return ret; 
+						}
 				}
 
-				if(!(myBoard.getPiece(row+yoffset, column-1).priority == 0))
-				{
-					if((myBoard.getPiece(row+yoffset, column-1).getPriority() != priority) && (myBoard.getPiece(row+doubleoffset, column-2).priority == 0))
-					{
-						CheckersPiece temp = new CheckersPiece(priority*-1,row+doubleoffset, column-2, null);
-						ret += " " + temp.colToString() + temp.rowToString();
-						moves.add(ret);
-						ret = colToString() + rowToString();
-					}
-				}
-
-			}catch(IndexOutOfBoundsException e)
+			}catch(Exception e) {}
+		}
+		else
+		{
+			if(myBoard.getPiece(row+rowMove, column+colMove).priority == 0)
 			{
-				if(column == 0)
-				{
-					if(myBoard.getPiece(row+yoffset, column+1).priority == 0)
-					{
-						CheckersPiece temp = new CheckersPiece(priority*-1,row+yoffset, column+1, null);
-						ret += " " + temp.colToString() +(temp.rowToString()); //-1
-						moves.add(ret);
-						ret = colToString() + rowToString(); //resets ret
-					}
-				}
-					
-//				else if(column == 7)
-//				{
-//					if(myBoard.getPiece(row+yoffset, column-1).priority == 0)
-//					{
-//						CheckersPiece temp = new CheckersPiece(priority*-1,row+yoffset, column-1, null);
-//						ret += " " + temp.colToString() +(temp.rowToString()); //-1
-//						moves.add(ret);
-//						ret = colToString() + rowToString(); //resets ret
-//					}
-//				}
-
-				
-			}catch(NullPointerException e)
-			{
-				
+				String ret = colToString() + rowToString();
+				CheckersPiece temp = new CheckersPiece(priority*-1,row+rowMove, column+colMove, null);
+				ret += " " + temp.colToString() + temp.rowToString();
+				return ret; 
 			}
 		}
-		else try 
-		{
-			if(myBoard.getPiece(row+yoffset, column-1).priority == 0)
-			{
-				CheckersPiece temp = new CheckersPiece(priority*-1,row+yoffset, column-1, null);
-				ret += " " + temp.colToString() +(temp.rowToString()); //-1
-				moves.add(ret);
-				ret = colToString() + rowToString(); //resets ret
-			}
-			if(myBoard.getPiece(row+yoffset, column+1).priority == 0)
-			{
-				CheckersPiece temp = new CheckersPiece(priority*-1,row+yoffset, column+1, null);
-				ret += " " + temp.colToString() +(temp.rowToString()); //-1
-				moves.add(ret);
-				ret = colToString() + rowToString(); //resets ret
-			}
-
-		}catch(IndexOutOfBoundsException e)
-		{
-			if(column == 0)
-			{
-				if(myBoard.getPiece(row+yoffset, column+1).priority == 0)
-				{
-					CheckersPiece temp = new CheckersPiece(priority*-1,row+yoffset, column+1, null);
-					ret += " " + temp.colToString() +(temp.rowToString()); //-1
-					moves.add(ret);
-					ret = colToString() + rowToString(); //resets ret
-				}
-			}
-				
-//			else if(column == 7)
-//			{
-//				if(myBoard.getPiece(row+yoffset, column-1).priority == 0)
-//				{
-//					CheckersPiece temp = new CheckersPiece(priority*-1,row+yoffset, column-1, null);
-//					ret += " " + temp.colToString() +(temp.rowToString()); //-1
-//					moves.add(ret);
-//					ret = colToString() + rowToString(); //resets ret
-//				}
-//			}
-		}catch(NullPointerException e)
-		{
-			
-		}
-		return moves;
+		return "";
+		//		return ret;
 	}
 
 	public boolean move(int row, int col)
@@ -135,7 +73,7 @@ public class CheckersPiece
 			return false;
 		else
 		{
-			
+
 			if(canJump())
 			{
 				int midR = (row+this.row) /2;
@@ -150,8 +88,7 @@ public class CheckersPiece
 			return true;
 		}
 	}
-	
-	//public void jump(int row, int col,)
+
 
 	public void swap(CheckersPiece piece, int row, int col) //first piece is being swapped/jumped with second piece
 	{
@@ -160,8 +97,7 @@ public class CheckersPiece
 		int oldrow = row;
 		int oldcol = col;
 		CheckersPiece temp = new CheckersPiece(priority, temprow, tempcol, myBoard);
-//		temp.hasJumped = true;
-		//if(myBoard.getPiece(row, col).priority == 0)
+
 		if(piece.priority == 0)
 		{
 			piece.row = row;
@@ -196,7 +132,7 @@ public class CheckersPiece
 					return true;
 				}
 			}
-			
+
 		}catch(IndexOutOfBoundsException e)
 		{
 
