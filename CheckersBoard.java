@@ -27,7 +27,7 @@ public class CheckersBoard
 				}
 			}
 		}
-		
+
 
 		//red pieces
 		for (int r = 5; r < checkersBoard.length; r++)
@@ -47,7 +47,7 @@ public class CheckersBoard
 				}
 			}
 		}
-		
+
 		//empty spaces
 		for (int r = 0; r < checkersBoard.length; r++)
 		{
@@ -59,7 +59,7 @@ public class CheckersBoard
 				}
 			}
 		}
-	//	flip();
+		//	flip();
 	}
 
 	//copy each character of the file into a char[][], then use the position of each char in that array to place them in the board.
@@ -77,7 +77,7 @@ public class CheckersBoard
 					spots[i][c] = temp.charAt(c); //translates the file into a 2d array
 				}
 			}
-		
+
 			checkersBoard = new CheckersPiece[8][8];
 			for (int r = 0; r < spots.length; r++)
 			{
@@ -113,18 +113,18 @@ public class CheckersBoard
 		}
 	}
 
-//	private void flip()//(CheckersPiece[][] flipBoard) //TODO FIX FLIP SO THAT THE ACTUAL LOCATION OF THE PIECES CHANGE
-//	{
-//		for(int r = 0; r < (checkersBoard.length)/2; r++)
-//		{
-//			for(int c = 0; c < checkersBoard[0].length; c++)
-//			{
-//				CheckersPiece temp = checkersBoard[7-r][c];
-//				checkersBoard[7-r][c] = checkersBoard[r][c];
-//				checkersBoard[r][c] = temp;
-//			}
-//		}
-//	}
+	//	private void flip()//(CheckersPiece[][] flipBoard) //TODO FIX FLIP SO THAT THE ACTUAL LOCATION OF THE PIECES CHANGE
+	//	{
+	//		for(int r = 0; r < (checkersBoard.length)/2; r++)
+	//		{
+	//			for(int c = 0; c < checkersBoard[0].length; c++)
+	//			{
+	//				CheckersPiece temp = checkersBoard[7-r][c];
+	//				checkersBoard[7-r][c] = checkersBoard[r][c];
+	//				checkersBoard[r][c] = temp;
+	//			}
+	//		}
+	//	}
 
 	public CheckersPiece getPiece(int row, int col)
 	{
@@ -167,7 +167,7 @@ public class CheckersBoard
 	{
 		//figure out an algorithm to prin a visual representation of the board
 		System.out.println("  ---+---+---+---+---+---+---+--- ");
-		
+
 		for (int r = 0; r < checkersBoard.length; r++)
 		{
 			System.out.print(8-r);
@@ -183,25 +183,25 @@ public class CheckersBoard
 			else	
 				System.out.println(" |\n  ---+---+---+---+---+---+---+---");
 		}
-		System.out.println("    A * B * C * D * E * F * G * H");
+		System.out.println("    A * B * C * D * E * F * G * H  ?I?");
 	}
 
 	public void add(CheckersPiece temp, int row, int column) 
 	{
 		checkersBoard[row][column] = temp;
-		
+
 	}
-	
+
 	public void add(KingCheckersPiece temp, int row, int column) 
 	{
 		checkersBoard[row][column] = temp;
-		
+
 	}
-	
+
 	public void delete(int row, int col)
 	{
 		checkersBoard[row][col].priority = 0;
-		
+
 	}
 
 
