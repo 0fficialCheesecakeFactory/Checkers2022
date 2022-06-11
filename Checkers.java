@@ -59,7 +59,7 @@ public class Checkers
 					moved = false;
 					System.out.println("It is " + first +"'s turn");
 					System.out.print("your moves:");
-					moveList = doTurn(firstToAct, moveList);
+					moveList = doTurn(firstToAct);
 					System.out.println("What is your move? Enter \"[firstspot] [secondspot]\"");
 					if(!moveList.isEmpty()) move = input.nextLine();
 					else move = "";
@@ -103,7 +103,7 @@ public class Checkers
 					else moved = false;
 				}while(!moved);
 
-			}while(board.getPiece(row2, col2).canJump() && board.getPiece(row2,col2).hasJumped && !moved); //loop that sees how many times it can jump
+			}while(board.getPiece(row2, col2).canJump() && board.getPiece(row2,col2).hasJumped); //loop that sees how many times it can jump
 			do
 			{
 				do
@@ -111,11 +111,11 @@ public class Checkers
 					moved = false;
 					System.out.println("It is " + second +"'s turn");
 					System.out.print("your moves:");
-					moveList = doTurn(secondToAct,moveList);
+					moveList = doTurn(secondToAct);
 					System.out.println("What is your move? Enter \"[firstspot] [secondspot]\"");
 					if(!moveList.isEmpty()) move = input.nextLine();
 					else move = "";
-					move.toUpperCase();
+					move = move.toUpperCase();
 					if(moveList.contains(move) && !moveList.isEmpty()) //checks if input is valid
 					{
 
@@ -159,30 +159,20 @@ public class Checkers
 		//win condition
 		if (redWon) System.out.println("Congratulations! The red player won!"); 
 		else System.out.println("Congratulations! The black player won!");
-		System.out.println("     _,.");
-		System.out.println("    ,` -.)");
-		System.out.println("   ( _/-\\\\-._");
-		System.out.println("  /,|`--._,-^|            ,");
-		System.out.println("  \\_| |`-._/||          ,\'|");
-		System.out.println("    |  `-, / |         /  /");
-		System.out.println("    |     || |        /  /");
-		System.out.println("     `r-._||/   __   /  /");
-		System.out.println(" __,-<_     )`-/  `./  /");
-		System.out.println("\'  \\   `---\'   \\   /  /");
-		System.out.println("    |           |./  /");
-		System.out.println("    /           //  /");
-		System.out.println("\\_/' \\         |/  /");
-		System.out.println(" |    , ``  (\\/  /_");
-		System.out.println(" |    |   _,^-'/  /");
-		System.out.println("  \\,.->._    \\X-=/^");
-		System.out.println("  (  /   `-._//^`");
-		System.out.println("   `Y-.____(__}");
-		System.out.println("    |     {__)");
-		System.out.println("          ()");
+		System.out.println(" ________  ________  _____ ______   _______           ________  ___      ___ _______   ________     ");     
+		System.out.println("|\\   ____\\|\\   __  \\|\\   _ \\  _   \\|\\  ___ \\         |\\   __  \\|\\  \\    /  /|\\  ___ \\ |\\   __  \\    ");
+		System.out.println("\\ \\  \\___|\\ \\  \\|\\  \\ \\  \\\\\\__\\ \\  \\ \\   __/|        \\ \\  \\|\\  \\ \\  \\  /  / | \\   __/|\\ \\  \\|\\  \\   ");
+		System.out.println(" \\ \\  \\  __\\ \\   __  \\ \\  \\\\|__| \\  \\ \\  \\_|/__       \\ \\  \\\\\\  \\ \\  \\/  / / \\ \\  \\_|/_\\ \\   _  _\\  ");
+		System.out.println("   \\ \\  \\|\\  \\ \\  \\ \\  \\ \\  \\    \\ \\  \\ \\  \\_|\\ \\       \\ \\  \\\\\\  \\ \\    / /   \\ \\  \\_|\\ \\ \\  \\\\  \\| ");
+		System.out.println("   \\ \\_______\\ \\__\\ \\__\\ \\__\\    \\ \\__\\ \\_______\\       \\ \\_______\\ \\__/ /     \\ \\_______\\ \\__\\\\ _\\ ");
+		System.out.println("    \\|_______|\\|__|\\|__|\\|__|     \\|__|\\|_______|        \\|_______|\\|__|/       \\|_______|\\|__|\\|__||");
+		                                                                                                     
+		                                                                                                     
+		System.out.println("\nhttps://imgur.com/a/1XLnqrA");
 
 	}
 
-	private ArrayList<String> doTurn(int color, ArrayList<String> moveList) 
+	private ArrayList<String> doTurn(int color) 
 	{
 		try 
 		{
@@ -238,9 +228,10 @@ public class Checkers
 		}
 		catch(Exception e)
 		{
-
+		//	e.printStackTrace();
 		}
 		return null;
+		
 
 	}
 
@@ -274,8 +265,8 @@ public class Checkers
 		while(!redWon && !blackWon && lineRead.hasNextLine())
 		{
 			ArrayList<String> moveList = new ArrayList<String>(); 
-			moveList = doTurn(1, moveList);
-			moveList.addAll(doTurn(2, moveList));
+			moveList = doTurn(1);
+			moveList.addAll(doTurn(2));
 
 			String move = lineRead.nextLine();
 			if(moveList.contains(move))
