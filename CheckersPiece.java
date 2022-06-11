@@ -49,9 +49,9 @@ public class CheckersPiece
 						}
 				}
 
-			}catch(Exception e) {}
+			}catch(Exception e) {}//e.printStackTrace();}
 		}
-		else
+		else try
 		{
 			if(myBoard.getPiece(row+rowMove, column+colMove).priority == 0)
 			{
@@ -60,7 +60,7 @@ public class CheckersPiece
 				ret += " " + temp.colToString() + temp.rowToString();
 				return ret; 
 			}
-		}
+		}catch(Exception e) {}
 		return "";
 		//		return ret;
 	}
@@ -135,11 +135,17 @@ public class CheckersPiece
 
 		}catch(IndexOutOfBoundsException e)
 		{
-
-		}
-		catch(NullPointerException e)
-		{
-			return false;
+			try 
+			{
+				if(!(myBoard.getPiece(row+yoffset, column-1).priority == 0))
+				{
+					if((myBoard.getPiece(row+yoffset, column-1).getPriority() != priority) && (myBoard.getPiece(row+doubleoffset, column-2).priority == 0))
+					{
+						return true;
+					}
+				}
+			}catch(Exception f) {}
+			
 		}
 		return false;
 	}
