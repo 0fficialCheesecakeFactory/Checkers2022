@@ -133,6 +133,16 @@ public class KingCheckersPiece extends CheckersPiece
 					}
 				}
 			}
+			else if(row == 7 && column == 7)
+			{
+				if(!(myBoard.getPiece(row-1, column-1).priority == 0))
+				{
+					if((myBoard.getPiece(row-1, column-1).getPriority() != priority) && (myBoard.getPiece(row-2, column-2).priority == 0))
+					{
+						return true;
+					}
+				}
+			}
 			else if(row == 7)
 			{
 				if(!(myBoard.getPiece(row-1, column+1).priority == 0))
