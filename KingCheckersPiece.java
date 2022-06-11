@@ -38,16 +38,17 @@ public class KingCheckersPiece extends CheckersPiece
 
 			}catch(Exception e) {}
 		}
-		else
+		else try
 		{
 			if(myBoard.getPiece(row+rowMove, column+colMove).priority == 0)
 			{
 				String ret = colToString() + rowToString();
 				CheckersPiece temp = new CheckersPiece(priority*-1,row+rowMove, column+colMove, null);
 				ret += " " + temp.colToString() + temp.rowToString();
+				//System.out.println("hi " + ret);
 				return ret; 
 			}
-		}
+		}catch(Exception e) {}
 		return "";
 		//		return ret;
 	}
@@ -91,31 +92,80 @@ public class KingCheckersPiece extends CheckersPiece
 
 		}catch(IndexOutOfBoundsException e)
 		{
+
 			if(row == 0 && column == 7)
 			{
-				if(myBoard.getPiece(row+1, column-1).priority != priority) return true;
+				if(!(myBoard.getPiece(row+1, column-1).priority == 0))
+				{
+					if((myBoard.getPiece(row+1, column-1).getPriority() != priority) && (myBoard.getPiece(row+2, column-2).priority == 0))
+					{
+						return true;
+					}
+				}
+		
 			}
 			else if(row == 0)
 			{
-				if(myBoard.getPiece(row+1, column-1).priority != priority) return true;
-				if(myBoard.getPiece(row+1, column+1).priority != priority) return true;		
+				if(!(myBoard.getPiece(row+1, column-1).priority == 0))
+				{
+					if((myBoard.getPiece(row+1, column-1).getPriority() != priority) && (myBoard.getPiece(row+2, column-2).priority == 0))
+					{
+						return true;
+					}
+				}
+				if(!(myBoard.getPiece(row+1, column+1).priority == 0))
+				{
+					if((myBoard.getPiece(row+1, column+1).getPriority() != priority) && (myBoard.getPiece(row+2, column+2).priority == 0))
+					{
+						return true;
+					}
+				}
 			}
 
 
 			else if(row == 7 && column == 0)
 			{
-				if(myBoard.getPiece(row-1, column+1).priority != priority) return true;
+				if(!(myBoard.getPiece(row-1, column+1).priority == 0))
+				{
+					if((myBoard.getPiece(row-1, column+1).getPriority() != priority) && (myBoard.getPiece(row-2, column+2).priority == 0))
+					{
+						return true;
+					}
+				}
 			}
 			else if(row == 7)
 			{
-				if(myBoard.getPiece(row-1, column-1).priority != priority) return true;
-				if(myBoard.getPiece(row-1, column+1).priority != priority) return true;
+				if(!(myBoard.getPiece(row-1, column+1).priority == 0))
+				{
+					if((myBoard.getPiece(row-1, column+1).getPriority() != priority) && (myBoard.getPiece(row-2, column+2).priority == 0))
+					{
+						return true;
+					}
+				}
+				if(!(myBoard.getPiece(row-1, column-1).priority == 0))
+				{
+					if((myBoard.getPiece(row-1, column-1).getPriority() != priority) && (myBoard.getPiece(row-2, column-2).priority == 0))
+					{
+						return true;
+					}
+				}
 			}
 			else if(column == 0)
 			{
-				if(myBoard.getPiece(row+1, column+1).priority != priority) return true;
-				if(myBoard.getPiece(row-1, column+1).priority != priority) return true;
-
+				if(!(myBoard.getPiece(row-1, column+1).priority == 0))
+				{
+					if((myBoard.getPiece(row-1, column+1).getPriority() != priority) && (myBoard.getPiece(row-2, column+2).priority == 0))
+					{
+						return true;
+					}
+				}
+				if(!(myBoard.getPiece(row+1, column+1).priority == 0))
+				{
+					if((myBoard.getPiece(row+1, column+1).getPriority() != priority) && (myBoard.getPiece(row+2, column+2).priority == 0))
+					{
+						return true;
+					}
+				}
 			}
 		}
 		catch(NullPointerException e)
