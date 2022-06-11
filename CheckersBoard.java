@@ -183,7 +183,7 @@ public class CheckersBoard
 			else	
 				System.out.println(" |\n  ---+---+---+---+---+---+---+---");
 		}
-		System.out.println("    A * B * C * D * E * F * G * H  ?I?");
+		System.out.println("    A * B * C * D * E * F * G * H");
 	}
 
 	public void add(CheckersPiece temp, int row, int column) 
