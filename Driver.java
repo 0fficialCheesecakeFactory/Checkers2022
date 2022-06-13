@@ -10,7 +10,7 @@ public class Driver {
 		Scanner scan = new Scanner(System.in);
 		String lcv;
 		//File f = new File("testBoard.txt");
-		File f = new File("testBoard.txt");
+		File f = new File("otherTest.txt");
 		 System.out.println("\t___       __   _______   ___       ________  ________  _____ ______   _______           _________  ________          ________  ___  ___  _______   ________  ___  __    _______   ________  ________      ");
 		 System.out.println("\t|\\  \\     |\\  \\|\\  ___ \\ |\\  \\     |\\   ____\\|\\   __  \\|\\   _ \\  _   \\|\\  ___ \\         |\\___   ___\\\\   __  \\        |\\   ____\\|\\  \\|\\  \\|\\  ___ \\ |\\   ____\\|\\  \\|\\  \\ |\\  ___ \\ |\\   __  \\|\\   ____\\     ");
 		 System.out.println("\t\\ \\  \\    \\ \\  \\ \\   __/|\\ \\  \\    \\ \\  \\___|\\ \\  \\|\\  \\ \\  \\\\\\__\\ \\  \\ \\   __/|        \\|___ \\  \\_\\ \\  \\|\\  \\       \\ \\  \\___|\\ \\  \\\\\\  \\ \\   __/|\\ \\  \\___|\\ \\  \\/  /|\\ \\   __/|\\ \\  \\|\\  \\ \\  \\___|_    ");
@@ -19,8 +19,13 @@ public class Driver {
 		 System.out.println("\t \\ \\____________\\ \\_______\\ \\_______\\ \\_______\\ \\_______\\ \\__\\    \\ \\__\\ \\_______\\           \\ \\__\\ \\ \\_______\\       \\ \\_______\\ \\__\\ \\__\\ \\_______\\ \\_______\\ \\__\\\\ \\__\\ \\_______\\ \\__\\\\ _\\ ____\\_\\  \\ "); 
 		 System.out.println("\t  \\|____________|\\|_______|\\|_______|\\|_______|\\|_______|\\|__|     \\|__|\\|_______|            \\|__|  \\|_______|        \\|_______|\\|__|\\|__|\\|_______|\\|_______|\\|__| \\|__|\\|_______|\\|__|\\|__|\\_________\\");
 		                                                                                                                                                                     //                           \|_________|
-		System.out.println("\nWould you like to play? (y/n)");
+		System.out.println("\nWould you like to play, test, or quit? (y/t/n)");
 		lcv = scan.next();
+		while(lcv.equalsIgnoreCase("T"))
+		{
+			System.out.println("Enter the name of the file you would like to test: ");
+			
+		}
 		while(lcv.equalsIgnoreCase("Y"))
 		{
 			printRules();
