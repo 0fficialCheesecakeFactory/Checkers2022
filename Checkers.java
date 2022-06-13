@@ -1,4 +1,3 @@
-import java.io.Console;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -39,10 +38,11 @@ public class Checkers
 			secondToAct = 1;
 			first = "red";
 			second = "black";
+			Driver d = new Driver();
 		}
 	}
 
-	public void run()
+	public void run() throws InterruptedException
 	{
 		Scanner input = new Scanner(System.in);
 		int col1, col2 = 0;
@@ -186,6 +186,7 @@ public class Checkers
 		System.out.println("   \\ \\  \\|\\  \\ \\  \\ \\  \\ \\  \\    \\ \\  \\ \\  \\_|\\ \\       \\ \\  \\\\\\  \\ \\    / /   \\ \\  \\_|\\ \\ \\  \\\\  \\| ");
 		System.out.println("   \\ \\_______\\ \\__\\ \\__\\ \\__\\    \\ \\__\\ \\_______\\       \\ \\_______\\ \\__/ /     \\ \\_______\\ \\__\\\\ _\\ ");
 		System.out.println("    \\|_______|\\|__|\\|__|\\|__|     \\|__|\\|_______|        \\|_______|\\|__|/       \\|_______|\\|__|\\|__||");
+		Thread.sleep(5000);
 
 	}
 
