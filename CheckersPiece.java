@@ -80,7 +80,7 @@ public class CheckersPiece
 				int midC = (col + this.column) /2;
 				myBoard.delete(midR, midC);
 				myBoard.add(new CheckersPiece(0,midR,midC,null), midR, midC);
-				//hasJumped = true;
+				
 				swap(myBoard.getPiece(row,col), this.row, column);
 				myBoard.getPiece(row, col).hasJumped = true;
 			}
@@ -135,7 +135,28 @@ public class CheckersPiece
 
 		}catch(IndexOutOfBoundsException e)
 		{
-			try 
+			if(row == 7)
+			{
+				try{
+					if(!(myBoard.getPiece(row-1, column+1).priority == 0))
+				{
+					if((myBoard.getPiece(row-1, column+1).getPriority() != priority) && (myBoard.getPiece(row-2, column+2).priority == 0))
+					{
+						return true;
+					}
+				}
+				if(!(myBoard.getPiece(row-1, column-1).priority == 0))
+				{
+					if((myBoard.getPiece(row-1, column-1).getPriority() != priority) && (myBoard.getPiece(row-2, column-2).priority == 0))
+					{
+						return true;
+					}
+				}
+				}catch(Exception f){ }
+			}
+				
+				
+			else try 
 			{
 				if(!(myBoard.getPiece(row+yoffset, column-1).priority == 0))
 				{
