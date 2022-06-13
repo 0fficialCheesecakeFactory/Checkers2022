@@ -2,9 +2,11 @@ import java.util.*;
 
 public class KingCheckersPiece extends CheckersPiece
 {
-	public KingCheckersPiece(int priority, int row, int col, CheckersBoard board)
+	public KingCheckersPiece(int priority, int row, int col, CheckersBoard board, boolean hasJumped)
 	{
 		super(priority, row, col, board);
+		//hasJumped = super.hasJumped;
+		hasJumped = board.getPiece(row, col).hasJumped;
 	}
 
 	public ArrayList<String> legalMoves()
@@ -145,7 +147,8 @@ public class KingCheckersPiece extends CheckersPiece
 			}
 			else if(row == 7)
 			{
-				if(!(myBoard.getPiece(row-1, column+1).priority == 0))
+				try{
+					if(!(myBoard.getPiece(row-1, column+1).priority == 0))
 				{
 					if((myBoard.getPiece(row-1, column+1).getPriority() != priority) && (myBoard.getPiece(row-2, column+2).priority == 0))
 					{
@@ -159,6 +162,8 @@ public class KingCheckersPiece extends CheckersPiece
 						return true;
 					}
 				}
+				}catch(Exception f){ }
+				
 			}
 			else if(column == 0)
 			{
@@ -177,6 +182,24 @@ public class KingCheckersPiece extends CheckersPiece
 					}
 				}
 			}
+			else if(column == 7)
+			{
+				if(!(myBoard.getPiece(row-1, column-1).priority == 0))
+				{
+					if((myBoard.getPiece(row-1, column-1).getPriority() != priority) && (myBoard.getPiece(row-2, column-2).priority == 0))
+					{
+						return true;
+					}
+				}
+				if(!(myBoard.getPiece(row+1, column-1).priority == 0))
+				{
+					if((myBoard.getPiece(row+1, column-1).getPriority() != priority) && (myBoard.getPiece(row+2, column-2).priority == 0))
+					{
+						return true;
+					}
+				}
+			}
+			//e.printStackTrace();
 		}
 		catch(NullPointerException e)
 		{
@@ -193,7 +216,7 @@ public class KingCheckersPiece extends CheckersPiece
 		int tempcol = piece.column;
 		int oldrow = row;
 		int oldcol = col;
-		KingCheckersPiece temp = new KingCheckersPiece(priority, temprow, tempcol, myBoard);
+		KingCheckersPiece temp = new KingCheckersPiece(priority, temprow, tempcol, myBoard, hasJumped);
 		//if(myBoard.getPiece(row, col).priority == 0)
 		if(piece.priority == 0)
 		{
