@@ -1,8 +1,8 @@
-  r B r 
-        
-    b   
-        
-r       
- r      
-r     r 
- b b R  
+  r r   
+ r r r r
+r   r r 
+ r b   r
+r b b b 
+ b   b  
+b b b b 
+   b   b
