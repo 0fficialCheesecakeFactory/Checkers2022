@@ -12,6 +12,7 @@ public class Checkers
 	private String second;
 	private boolean redWon = false;
 	private boolean blackWon = false;
+	boolean temp = false;
 
 	public Checkers() 
 	{
@@ -59,7 +60,21 @@ public class Checkers
 					moved = false;
 					System.out.println("It is " + first +"'s turn");
 					System.out.print("your moves:");
-					moveList = doTurn(firstToAct);
+					if(board.getPiece(row2, col2).canJump() && board.getPiece(row2,col2).hasJumped) 
+					{
+						moveList = board.getPiece(row2, col2).legalMoves();
+						for(int i = 0; i<moveList.size(); i++)
+						{
+							if(moveList.get(i).equals("") || moveList.get(i).equals(" ")) 
+							{
+								moveList.remove(i);
+								i--;
+							}
+						}
+						System.out.println(moveList);
+
+					}
+					else moveList = doTurn(firstToAct);
 					System.out.println("What is your move? Enter \"[firstspot] [secondspot]\"");
 					if(!moveList.isEmpty()) move = input.nextLine();
 					else move = "";
@@ -83,14 +98,17 @@ public class Checkers
 						if(row2 == 0 && board.getPiece(row2, col2).priority == 1)
 							board.kingPiece(row2, col2);
 						else if(row2 == 7 && board.getPiece(row2, col2).priority == 2)
+						{
+							if(board.getPiece(row2, col2).hasJumped) temp = true;
+							else temp = false;
 							board.kingPiece(row2, col2);
+							board.getPiece(row2, col2).hasJumped = temp;
+
+						}
+
 
 						moved = true;
 
-						if(row2 == 0 && board.getPiece(row2, col2).priority == 1)
-							board.kingPiece(row2, col2);
-						else if(row2 == 7 && board.getPiece(row2, col2).priority == 2)
-							board.kingPiece(row2, col2);
 
 						if(scanForNoPieces() == 1) //checks for winners
 							blackWon = true;
@@ -102,6 +120,8 @@ public class Checkers
 					else if (moveList.isEmpty()) moved = true;
 					else moved = false;
 				}while(!moved);
+				System.out.println(board.getPiece(row2,col2));
+				System.out.println(board.getPiece(row2,col2).hasJumped);
 
 			}while(board.getPiece(row2, col2).canJump() && board.getPiece(row2,col2).hasJumped); //loop that sees how many times it can jump
 			do
@@ -157,8 +177,8 @@ public class Checkers
 		}while(!redWon && !blackWon);
 
 		//win condition
-		if (redWon) System.out.println("Congratulations! The red player won!"); 
-		else System.out.println("Congratulations! The black player won!");
+		if (blackWon) System.out.println("Congratulations! The black player won!"); 
+		else if(redWon) System.out.println("Congratulations! The commie won!");
 		System.out.println(" ________  ________  _____ ______   _______           ________  ___      ___ _______   ________     ");     
 		System.out.println("|\\   ____\\|\\   __  \\|\\   _ \\  _   \\|\\  ___ \\         |\\   __  \\|\\  \\    /  /|\\  ___ \\ |\\   __  \\    ");
 		System.out.println("\\ \\  \\___|\\ \\  \\|\\  \\ \\  \\\\\\__\\ \\  \\ \\   __/|        \\ \\  \\|\\  \\ \\  \\  /  / | \\   __/|\\ \\  \\|\\  \\   ");
@@ -166,9 +186,6 @@ public class Checkers
 		System.out.println("   \\ \\  \\|\\  \\ \\  \\ \\  \\ \\  \\    \\ \\  \\ \\  \\_|\\ \\       \\ \\  \\\\\\  \\ \\    / /   \\ \\  \\_|\\ \\ \\  \\\\  \\| ");
 		System.out.println("   \\ \\_______\\ \\__\\ \\__\\ \\__\\    \\ \\__\\ \\_______\\       \\ \\_______\\ \\__/ /     \\ \\_______\\ \\__\\\\ _\\ ");
 		System.out.println("    \\|_______|\\|__|\\|__|\\|__|     \\|__|\\|_______|        \\|_______|\\|__|/       \\|_______|\\|__|\\|__||");
-		                                                                                                     
-		                                                                                                     
-		System.out.println("\nhttps://imgur.com/a/1XLnqrA");
 
 	}
 
@@ -228,10 +245,10 @@ public class Checkers
 		}
 		catch(Exception e)
 		{
-		//	e.printStackTrace();
+			//	e.printStackTrace();
 		}
 		return null;
-		
+
 
 	}
 
