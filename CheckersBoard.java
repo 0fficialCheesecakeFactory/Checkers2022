@@ -14,14 +14,14 @@ public class CheckersBoard
 		{
 			if(r%2 == 0)
 			{
-				for (int c = 0; c < checkersBoard[0].length; c+=2)
+				for (int c = 1; c < checkersBoard[0].length; c+=2)
 				{
 					checkersBoard[r][c] = new CheckersPiece(2, r, c, this);
 				}
 			}
 			else
 			{
-				for (int c = 1; c < checkersBoard[0].length; c+=2)
+				for (int c = 0; c < checkersBoard[0].length; c+=2)
 				{
 					checkersBoard[r][c] = new CheckersPiece(2, r, c, this);
 				}
@@ -34,14 +34,14 @@ public class CheckersBoard
 		{
 			if(r%2 == 0)
 			{
-				for (int c = 0; c < checkersBoard[0].length; c+=2)
+				for (int c = 1; c < checkersBoard[0].length; c+=2)
 				{
 					checkersBoard[r][c] = new CheckersPiece(1, r, c, this);
 				}
 			}
 			else
 			{
-				for (int c = 1; c < checkersBoard[0].length; c+=2)
+				for (int c = 0; c < checkersBoard[0].length; c+=2)
 				{
 					checkersBoard[r][c] = new CheckersPiece(1, r, c, this);
 				}
@@ -93,11 +93,11 @@ public class CheckersBoard
 					}
 					else if (spots[r][col] == 'R')
 					{
-						checkersBoard[r][col] = new KingCheckersPiece(2, r, col, this);
+						checkersBoard[r][col] = new KingCheckersPiece(2, r, col, this, false);
 					}
 					else if (spots[r][col] == 'B')
 					{
-						checkersBoard[r][col] = new KingCheckersPiece(1, r, col, this);
+						checkersBoard[r][col] = new KingCheckersPiece(1, r, col, this, false);
 					}
 					else //empty pieces (priority 0 b/c they do not exist)
 					{
@@ -133,7 +133,7 @@ public class CheckersBoard
 
 	public KingCheckersPiece kingPiece(int row, int col)
 	{
-		KingCheckersPiece king = new KingCheckersPiece(checkersBoard[row][col].getPriority(), row, col, this);
+		KingCheckersPiece king = new KingCheckersPiece(checkersBoard[row][col].getPriority(), row, col, this, checkersBoard[row][col].hasJumped);
 		checkersBoard[row][col] = king;
 		return king;
 	}
