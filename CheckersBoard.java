@@ -112,20 +112,6 @@ public class CheckersBoard
 			e.printStackTrace();
 		}
 	}
-
-	//	private void flip()//(CheckersPiece[][] flipBoard) //TODO FIX FLIP SO THAT THE ACTUAL LOCATION OF THE PIECES CHANGE
-	//	{
-	//		for(int r = 0; r < (checkersBoard.length)/2; r++)
-	//		{
-	//			for(int c = 0; c < checkersBoard[0].length; c++)
-	//			{
-	//				CheckersPiece temp = checkersBoard[7-r][c];
-	//				checkersBoard[7-r][c] = checkersBoard[r][c];
-	//				checkersBoard[r][c] = temp;
-	//			}
-	//		}
-	//	}
-
 	public CheckersPiece getPiece(int row, int col)
 	{
 		return checkersBoard[row][col];
