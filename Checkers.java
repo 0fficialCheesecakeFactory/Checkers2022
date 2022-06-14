@@ -120,8 +120,6 @@ public class Checkers
 					else if (moveList.isEmpty()) moved = true;
 					else moved = false;
 				}while(!moved);
-				System.out.println(board.getPiece(row2,col2));
-				System.out.println(board.getPiece(row2,col2).hasJumped);
 
 			}while(board.getPiece(row2, col2).canJump() && board.getPiece(row2,col2).hasJumped); //loop that sees how many times it can jump
 			do
@@ -211,9 +209,17 @@ public class Checkers
 			if(jump.isEmpty() && noJump.isEmpty())
 			{
 				if(color == 1)
+				{
 					redWon = true;
+					blackWon = false;
+				}
+					
 				else 
+				{
 					blackWon = true;
+					redWon = false;
+				}
+					
 			}
 			for(int i = 0; i<jump.size(); i++)
 			{
